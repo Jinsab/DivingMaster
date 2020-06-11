@@ -11,24 +11,27 @@ public class Status : MonoBehaviour
 	[SerializeField] private int SP;
 	public int _SP { get => SP; set => SP = value;}
 
-	public Text HpText;
-	public Text SpText;
+	[SerializeField] private int myDepth;
+	public int _myDepth { get => myDepth; set => myDepth = value; }
 
-	public Slider HpSlider;
-	public Slider SpSlider;
+	public Text hpText;
+	public Text spText;
+
+	public Slider hpSlider;
+	public Slider spSlider;
 
 	private void Start()
 	{
-		HpSlider.maxValue = HP;
-		SpSlider.maxValue = SP;
+		hpSlider.maxValue = HP;
+		spSlider.maxValue = SP;
 	}
 
 	private void Update()
 	{
-		HpText.text = _HP.ToString();
-		SpText.text = _SP.ToString();
+		hpText.text = _HP.ToString();
+		spText.text = _SP.ToString();
 
-		HpSlider.value = _HP;
-		SpSlider.value = _SP;
+		hpSlider.value = _HP;
+		spSlider.value = _SP;
 	}
 }

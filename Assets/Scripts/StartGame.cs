@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartGame : MonoBehaviour
 {
-	[SerializeField] private int WaterPressure = 5;
+	public MapDepth depth;
 	public Status status;
 	
 	public IEnumerator InGame()
@@ -16,7 +16,7 @@ public class StartGame : MonoBehaviour
 
 	IEnumerator HpController()
 	{
-		status._HP -= WaterPressure;
+		status._HP -= depth._WaterPressure;
 
 		yield return new WaitForSeconds(1f);
 
