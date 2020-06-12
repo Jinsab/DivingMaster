@@ -11,7 +11,7 @@ public class Panel : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Debug.Log("Get Touch");
+		//Debug.Log("Get Touch");
 		gameObject.SetActive(false);
 		startGame.StartCoroutine("InGame");
 		diving.StartCoroutine("Swim");

@@ -13,15 +13,31 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 
 	[SerializeField] private MapDepth depth;
 	[SerializeField] private Status status;
-
+	private float stTime = 0f;
+	private float plusTime = 0f;
+	private float maxSP;
+	
 	private void Start()
 	{
-	//	StartCoroutine("Swim");
+		maxSP = status._SP;
 	}
 
 	private void Update()
 	{
 		depth.depthText.text = "수심 : " + status._myDepth + "M";
+
+		stTime += Time.deltaTime;
+		
+		if (stTime >= 3f && status._SP < maxSP)
+		{
+			plusTime += Time.deltaTime;
+
+			if (plusTime >= 0.1f)
+			{
+				status._SP = (int)Mathf.Lerp(status._SP, (status._SP + maxSP / 20), stTime);
+				plusTime = 0f;
+			}
+		}
 	}
 
 	IEnumerator Swim() {
@@ -41,10 +57,10 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		yield return new WaitForSeconds(1f);
 	}
 
-
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Debug.Log("Get Swim Touch");
+		//Debug.Log("Get Swim Touch");
+		stTime = 0f;
 
 		if (status._SP - depth._SwimmingSP >= 0)
 		{
