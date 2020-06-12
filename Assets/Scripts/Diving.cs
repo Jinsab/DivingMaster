@@ -6,13 +6,14 @@ using UnityEngine.EventSystems;
 public class Diving : MonoBehaviour, IPointerDownHandler
 {
 	[SerializeField] private int swimPower;
-	public int _swimPower { get => swimPower; set => swimPower = value; }
-	
 	[SerializeField] private int touchPower;
+
+	public int _swimPower { get => swimPower; set => swimPower = value; }
 	public int _touchPower { get => touchPower; set => touchPower = value; }
 
 	[SerializeField] private MapDepth depth;
 	[SerializeField] private Status status;
+	
 	private float stTime = 0f;
 	private float plusTime = 0f;
 	private float maxSP;
@@ -20,6 +21,7 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 	private void Start()
 	{
 		maxSP = status._SP;
+		depth.maxDepthText.text = "최대 수심 : " + status._maxDepth + "M";
 	}
 
 	private void Update()

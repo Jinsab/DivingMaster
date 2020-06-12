@@ -6,13 +6,16 @@ using UnityEngine.UI;
 public class Status : MonoBehaviour
 {
 	[SerializeField] private int HP;
-	public int _HP { get => HP; set => HP = value; }
-
 	[SerializeField] private int SP;
-	public int _SP { get => SP; set => SP = value;}
-
 	[SerializeField] private int myDepth;
+	[SerializeField] private int maxDepth;
+	[SerializeField] private int coin;
+
+	public int _HP { get => HP; set => HP = value; }
+	public int _SP { get => SP; set => SP = value; }
 	public int _myDepth { get => myDepth; set => myDepth = value; }
+	public int _maxDepth { get => maxDepth; set => maxDepth = value; }
+	public int _coin { get => coin; set => coin = value; }
 
 	public Text hpText;
 	public Text spText;
@@ -24,6 +27,9 @@ public class Status : MonoBehaviour
 	{
 		hpSlider.maxValue = HP;
 		spSlider.maxValue = SP;
+
+		coin = PlayerPrefs.GetInt("coin");
+		maxDepth = PlayerPrefs.GetInt("maxDepth");
 	}
 
 	private void Update()
