@@ -20,6 +20,7 @@ public class StartGame : MonoBehaviour
 	IEnumerator HpController()
 	{
 		status._HP -= depth._WaterPressure;
+		status._HP = Mathf.Clamp(status._HP, 0, int.MaxValue);
 
 		yield return new WaitForSeconds(1f);
 
@@ -49,10 +50,10 @@ public class StartGame : MonoBehaviour
 
 		PlayerPrefs.SetInt("maxDepth", status._maxDepth);
 		PlayerPrefs.SetInt("coin", status._coin);
-		PlayerPrefs.SetInt("up_Health", upgrade._upgrade_health);
-		PlayerPrefs.SetInt("up_Stemina", upgrade._upgrade_stemina);
-		PlayerPrefs.SetInt("up_Swim", upgrade._upgrade_swim);
-		PlayerPrefs.SetInt("up_Power", upgrade._upgrade_power);
+		//PlayerPrefs.SetInt("up_Health", upgrade.HealthLevel);
+		//PlayerPrefs.SetInt("up_Stemina", upgrade.SteminaLevel);
+		//PlayerPrefs.SetInt("up_Swim", upgrade.SwimLevel);
+		//PlayerPrefs.SetInt("up_Power", upgrade.PowerLevel);
 		
 		Debug.Log("정산 완료");
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);

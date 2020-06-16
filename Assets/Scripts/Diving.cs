@@ -16,11 +16,12 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 	
 	private float stTime = 0f;
 	private float plusTime = 0f;
-	private float maxSP;
+	private int maxSP;
+	private int lastTouchSP;
 	
 	private void Start()
 	{
-		maxSP = status._SP;
+		SetMaxSP(status._SP);
 		depth.maxDepthText.text = "최대 수심 : " + status._maxDepth + "M";
 	}
 
@@ -33,17 +34,12 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		if (stTime >= 3f && status._SP < maxSP)
 		{
 			plusTime += Time.deltaTime;
-
-			if (plusTime >= 0.1f)
-			{
-				status._SP = (int)Mathf.Lerp(status._SP, (status._SP + maxSP / 20), stTime);
-				plusTime = 0f;
-			}
+			status._SP = (int)Mathf.Clamp(Mathf.Lerp(lastTouchSP, maxSP, plusTime/3), 0, maxSP);
 		}
 	}
 
 	IEnumerator Swim() {
-		if (depth._Depth >= status._myDepth) {
+		if (depth._Depth > status._myDepth && status._HP > 0) {
 			status._myDepth += swimPower;
 
 			yield return new WaitForSeconds(1f);
@@ -63,6 +59,7 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 	{
 		//Debug.Log("Get Swim Touch");
 		stTime = 0f;
+		plusTime = 0f;
 
 		if (status._SP - depth._SwimmingSP >= 0)
 		{
@@ -72,5 +69,8 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		else {
 			Debug.Log("Warring: not have stemina!!");
 		}
+		lastTouchSP = status._SP;
 	}
+
+	public void SetMaxSP(int sp) => maxSP = sp;
 }

@@ -250,8 +250,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 0}
-  m_SizeDelta: {x: -80, y: 0}
+  m_AnchoredPosition: {x: 32.5, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58991120
 MonoBehaviour:
@@ -474,6 +474,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7f14b1b7d31bc40ac2803af694438c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: {fileID: 735735274}
+  diving: {fileID: 1249089401}
+  getCoin:
+  - {fileID: 1674272457}
+  - {fileID: 1942950188}
+  - {fileID: 651028327}
+  upgradeText: {fileID: 1823981267}
 --- !u!4 &202772729
 Transform:
   m_ObjectHideFlags: 0
@@ -1366,8 +1373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 0}
-  m_SizeDelta: {x: -80, y: 0}
+  m_AnchoredPosition: {x: 32.5, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &497313722
 MonoBehaviour:
@@ -1400,7 +1407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 20
+  m_Text: 100
 --- !u!222 &497313723
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1443,7 +1450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: -85, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519233737
@@ -2603,7 +2610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: -85, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &755219076
@@ -2676,7 +2683,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: -85, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830112528
@@ -3179,8 +3186,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 0}
-  m_SizeDelta: {x: 200, y: 120}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 240, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1022802108
 MonoBehaviour:
@@ -3224,7 +3231,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1022802109}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 202772728}
+        m_MethodName: UpgradePower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1022802109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3599,8 +3617,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 0}
-  m_SizeDelta: {x: 200, y: 120}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 240, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1185099968
 MonoBehaviour:
@@ -3644,7 +3662,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1185099969}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 202772728}
+        m_MethodName: UpgradeSwim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1185099969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4246,6 +4275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e72c535f88280479db6f944be91000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health_text: {fileID: 4900000, guid: 1a8407c8f2b33954aaca3175cce3307a, type: 3}
+  stemina_text: {fileID: 4900000, guid: 72270b7e50a91134d94c566ea837d0db, type: 3}
+  swim_text: {fileID: 4900000, guid: 536277a5a1cdc9b4c8be75a183fc0817, type: 3}
+  power_text: {fileID: 4900000, guid: 1bca4fa733e876f43997d14a5752f34f, type: 3}
 --- !u!4 &1316946897
 Transform:
   m_ObjectHideFlags: 0
@@ -5419,8 +5452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 0}
-  m_SizeDelta: {x: 200, y: 120}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 240, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650149518
 MonoBehaviour:
@@ -5464,7 +5497,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1650149519}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 202772728}
+        m_MethodName: UpgradeHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1650149519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6004,8 +6048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 0}
-  m_SizeDelta: {x: -80, y: 0}
+  m_AnchoredPosition: {x: 32.5, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735755334
 MonoBehaviour:
@@ -6038,7 +6082,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 20
+  m_Text: 100
 --- !u!222 &1735755335
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6228,8 +6272,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 0}
-  m_SizeDelta: {x: -80, y: 0}
+  m_AnchoredPosition: {x: 32.5, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1776153009
 MonoBehaviour:
@@ -6453,6 +6497,7 @@ GameObject:
   - component: {fileID: 1823981264}
   - component: {fileID: 1823981266}
   - component: {fileID: 1823981265}
+  - component: {fileID: 1823981267}
   m_Layer: 5
   m_Name: "\uC2A4\uD0EF\uCC3D"
   m_TagString: Untagged
@@ -6522,6 +6567,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823981263}
   m_CullTransparentMesh: 0
+--- !u!114 &1823981267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823981263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fccdf3b660337541a7186d08913ab9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 997398908}
+  _pHealth: {fileID: 1401736847}
+  _cHelath: {fileID: 58991120}
+  stemina: {fileID: 1636157745}
+  _pStemina: {fileID: 1986268801}
+  _cStemina: {fileID: 1776153009}
+  swim: {fileID: 2079594338}
+  _pSwim: {fileID: 930537173}
+  _cSwim: {fileID: 497313722}
+  power: {fileID: 1684153844}
+  _pPower: {fileID: 989019472}
+  _cPower: {fileID: 1735755334}
 --- !u!1 &1851275778
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,7 +6698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchoredPosition: {x: -85, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854187608
@@ -7400,8 +7469,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 0}
-  m_SizeDelta: {x: 200, y: 120}
+  m_AnchoredPosition: {x: 200, y: 0}
+  m_SizeDelta: {x: 240, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033613164
 MonoBehaviour:
@@ -7445,7 +7514,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2033613165}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 202772728}
+        m_MethodName: UpgradeStemina
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2033613165
 MonoBehaviour:
   m_ObjectHideFlags: 0

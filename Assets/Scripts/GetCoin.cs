@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class GetCoin : MonoBehaviour
 {
-	//public Text coinText;
-
 	void Start()
     {
+		SetCoinText();
+    }
+
+	public void SetCoinText() {
 		Text coinText = gameObject.GetComponent<Text>();
 		coinText.text = PlayerPrefs.GetInt("coin").ToString();
-    }
+	}
 }

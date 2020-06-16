@@ -25,6 +25,9 @@ public class Status : MonoBehaviour
 
 	private void Start()
 	{
+		HP = PlayerPrefs.GetInt("health", 100);
+		SP = PlayerPrefs.GetInt("stemina", 100);
+		
 		hpSlider.maxValue = HP;
 		spSlider.maxValue = SP;
 
