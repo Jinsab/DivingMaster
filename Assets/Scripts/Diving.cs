@@ -47,13 +47,13 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 			StartCoroutine("Swim");
 		}
 		else {
-			StartCoroutine("Clear");
+			StopCoroutine("Swim");
 		}
 	}
 
-	IEnumerator Clear() {
-		yield return new WaitForSeconds(1f);
-	}
+	//IEnumerator Clear() {
+	//	yield return new WaitForSeconds(1f);
+	//}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
@@ -61,13 +61,16 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		stTime = 0f;
 		plusTime = 0f;
 
-		if (status._SP - depth._SwimmingSP >= 0)
+		if (status._SP - depth._SwimmingSP >= 0 && status._myDepth < depth._Depth)
 		{
 			status._SP -= depth._SwimmingSP;
 			status._myDepth += touchPower;
 		}
 		else {
-			Debug.Log("Warring: not have stemina!!");
+			if (status._SP - depth._SwimmingSP <= 0)
+				Debug.Log("Warring: not have stemina!!");
+			else
+				Debug.Log("Warring: your already clear!!");
 		}
 		lastTouchSP = status._SP;
 	}

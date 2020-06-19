@@ -72,6 +72,7 @@ public class UpgradeManager : MonoBehaviour
 			SettingCoin(getCoin);
 			upgradeText.SettingHealth(Health);
 			status._HP = Health.Value;
+			status.hpSlider.maxValue = status._HP;
 		}
 		else {
 			Debug.Log("Insufficient coin.");
@@ -94,6 +95,7 @@ public class UpgradeManager : MonoBehaviour
 			SettingCoin(getCoin);
 			upgradeText.SettingStemina(Stemina);
 			status._SP = Stemina.Value;
+			status.spSlider.maxValue = status._SP;
 			diving.SetMaxSP(Stemina.Value);
 		}
 		else
