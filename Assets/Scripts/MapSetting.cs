@@ -11,6 +11,11 @@ public class MapSetting : MonoBehaviour
 	public Text depth;
 	public MapDepth mapDepth;
 
+	private void Start()
+	{
+		SettingText();
+	}
+
 	public void SettingText() {
 		mapName.text = mapDepth.set.n;
 		waterPressure.text = "수압: " + "<color=#ff0000>" + mapDepth.set.w.ToString() + "</color>";

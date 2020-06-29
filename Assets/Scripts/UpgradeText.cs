@@ -5,43 +5,24 @@ using UnityEngine.UI;
 
 public class UpgradeText : MonoBehaviour
 {
-	public Text health;
-	public Text _pHealth;
-	public Text _cHelath;
-	public Text stemina;
-	public Text _pStemina;
-	public Text _cStemina;
-	public Text swim;
-	public Text _pSwim;
-	public Text _cSwim;
-	public Text power;
-	public Text _pPower;
-	public Text _cPower;
+	public Text reward;
+	public Text _pReward;
+	public Text _cReward;
+	public Text luck;
+	public Text _pLuck;
+	public Text _cLuck;
 
-	public void SettingHealth(Data data) {
-		health.text = "체력: " + data.Value.ToString();
-		_pHealth.text = $"({data.Value.ToString()} + {(data.Value / 10).ToString()})";
-		_cHelath.text = data.Cost.ToString();
+	public void SettingReward(Data data)
+	{
+		reward.text = "보상 강화: " + data.Value.ToString();
+		_pReward.text = $"({data.Value.ToString()} + {(1).ToString()})";
+		_cReward.text = data.Cost.ToString();
 	}
 
-	public void SettingStemina(Data data)
+	public void SettingLuck(Data data)
 	{
-		stemina.text = "기력: " + data.Value.ToString();
-		_pStemina.text = $"({data.Value.ToString()} + {(data.Value / 10).ToString()})";
-		_cStemina.text = data.Cost.ToString();
-	}
-
-	public void SettingSwim(Data data)
-	{
-		swim.text = "자동 하강: " + data.Value.ToString();
-		_pSwim.text = $"({data.Value.ToString()} + {(1).ToString()})";
-		_cSwim.text = data.Cost.ToString();
-	}
-
-	public void SettingPower(Data data)
-	{
-		power.text = "터치 하강: " + data.Value.ToString();
-		_pPower.text = $"({data.Value.ToString()} + {(1).ToString()})";
-		_cPower.text = data.Cost.ToString();
+		luck.text = "행운 강화: " + data.Value.ToString();
+		_pLuck.text = $"({data.Value.ToString()} + {(1).ToString()})";
+		_cLuck.text = data.Cost.ToString();
 	}
 }

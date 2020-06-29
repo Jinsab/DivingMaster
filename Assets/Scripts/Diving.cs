@@ -11,8 +11,8 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 	public int _swimPower { get => swimPower; set => swimPower = value; }
 	public int _touchPower { get => touchPower; set => touchPower = value; }
 
-	[SerializeField] private MapDepth depth;
-	[SerializeField] private Status status;
+	public MapDepth depth;
+	public Status status;
 	
 	private float stTime = 0f;
 	private float plusTime = 0f;

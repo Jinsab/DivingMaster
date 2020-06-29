@@ -24,11 +24,22 @@ public class UpgradeManager : MonoBehaviour
 		get => GameManager.uppower;
 		set => GameManager.uppower = value;
 	}
+	private Data Reward
+	{
+		get => GameManager.upreward;
+		set => GameManager.upreward = value;
+	}
+	private Data Luck
+	{
+		get => GameManager.upluck;
+		set => GameManager.upluck = value;
+	}
 
-	[SerializeField] private Status status;
-	[SerializeField] private Diving diving;
-	[SerializeField] private GetCoin[] getCoin;
-	[SerializeField] private UpgradeText upgradeText;
+	public Status status;
+	public Diving diving;
+	public GetCoin[] getCoin;
+	public StatText statText;
+	public UpgradeText upgradeText;
 
 	public void SettingCoin(GetCoin[] coin)
 	{
@@ -44,15 +55,21 @@ public class UpgradeManager : MonoBehaviour
 		Stemina = new Data(PlayerPrefs.GetString("upstemina"), 1, 100, 20);
 		Swim = new Data(PlayerPrefs.GetString("upswim"), 1, 1, 100);
 		Power = new Data(PlayerPrefs.GetString("uppower"), 1, 1, 300);
+		Reward = new Data(PlayerPrefs.GetString("upreward"), 1, 1, 1000);
+		Luck = new Data(PlayerPrefs.GetString("upluck"), 1, 1, 1000);
 
-		upgradeText.SettingHealth(Health);
-		upgradeText.SettingStemina(Stemina);
-		upgradeText.SettingSwim(Swim);
-		upgradeText.SettingPower(Power);
+		statText.SettingHealth(Health);
+		statText.SettingStemina(Stemina);
+		statText.SettingSwim(Swim);
+		statText.SettingPower(Power);
+		upgradeText.SettingReward(Reward);
+		upgradeText.SettingLuck(Luck);
+
 		diving.SetMaxSP(Stemina.Value);
-
 		diving._swimPower = Swim.Value;
 		diving._touchPower = Power.Value;
+
+		PlayerPrefs.SetInt("reward", Reward.Value);
 	}
 
 	public void UpgradeHealth() {
@@ -70,7 +87,7 @@ public class UpgradeManager : MonoBehaviour
 			PlayerPrefs.SetString("uphealth", Health.ToString());
 			
 			SettingCoin(getCoin);
-			upgradeText.SettingHealth(Health);
+			statText.SettingHealth(Health);
 			status._HP = Health.Value;
 			status.hpSlider.maxValue = status._HP;
 		}
@@ -93,7 +110,7 @@ public class UpgradeManager : MonoBehaviour
 			PlayerPrefs.SetInt("stemina", Stemina.Value);
 			PlayerPrefs.SetString("upstemina", Stemina.ToString());
 			SettingCoin(getCoin);
-			upgradeText.SettingStemina(Stemina);
+			statText.SettingStemina(Stemina);
 			status._SP = Stemina.Value;
 			status.spSlider.maxValue = status._SP;
 			diving.SetMaxSP(Stemina.Value);
@@ -117,7 +134,7 @@ public class UpgradeManager : MonoBehaviour
 			PlayerPrefs.SetInt("coin", status._coin);
 			PlayerPrefs.SetString("upswim", Swim.ToString());
 			SettingCoin(getCoin);
-			upgradeText.SettingSwim(Swim);
+			statText.SettingSwim(Swim);
 			diving._swimPower = Swim.Value;
 		}
 		else {
@@ -130,18 +147,54 @@ public class UpgradeManager : MonoBehaviour
 		{
 			status._coin -= Power.Cost;
 
-			Power = GameManager.PowerTable[Power.Level + 1];
-			//Power.Level++;
-			//Power.Value++;
-			//Power.Cost += (Power.Cost / 2); 
+			Power = GameManager.PowerTable[Power.Level + 1]; 
 
 			PlayerPrefs.SetInt("coin", status._coin);
 			PlayerPrefs.SetString("uppower", Power.ToString());
 			SettingCoin(getCoin);
-			upgradeText.SettingPower(Power);
+			statText.SettingPower(Power);
 			diving._touchPower = Power.Value;
 		}
 		else {
+			Debug.Log("Insufficient coin.");
+		}
+	}
+
+	public void UpgradeReward() {
+		if (status._coin >= Reward.Cost)
+		{
+			status._coin -= Reward.Cost;
+
+			Reward = GameManager.RewardTable[Reward.Level + 1];
+
+			PlayerPrefs.SetInt("coin", status._coin);
+			PlayerPrefs.SetString("upreward", Reward.ToString());
+			SettingCoin(getCoin);
+			upgradeText.SettingReward(Reward);
+			PlayerPrefs.SetInt("reward", Reward.Value);
+			//
+		}
+		else
+		{
+			Debug.Log("Insufficient coin.");
+		}
+	}
+
+	public void UpgradeLuck() {
+		if (status._coin >= Luck.Cost)
+		{
+			status._coin -= Luck.Cost;
+
+			Luck = GameManager.LuckTable[Luck.Level + 1];
+
+			PlayerPrefs.SetInt("coin", status._coin);
+			PlayerPrefs.SetString("upluck", Luck.ToString());
+			SettingCoin(getCoin);
+			upgradeText.SettingLuck(Luck);
+			//
+		}
+		else
+		{
 			Debug.Log("Insufficient coin.");
 		}
 	}

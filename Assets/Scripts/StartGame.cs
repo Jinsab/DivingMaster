@@ -85,7 +85,10 @@ public class StartGame : MonoBehaviour
 	}
 
 	public int ReturnCoin(int retain) {
-		int coin = ((depth._WaterPressure*(depth.mapLevel + 5)) + (status._myDepth/10));
+		int bonus;
+		bonus = PlayerPrefs.GetInt("reward");
+
+		int coin = ((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10));
 		retain += coin;
 
 		return retain;

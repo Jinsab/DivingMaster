@@ -51,6 +51,8 @@ public class MapDepth : MonoBehaviour
 
 	private void Start()
 	{
+		mapLevel = PlayerPrefs.GetInt("maplevel");
+
 		set = new SettingData(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
 	}
 
@@ -66,6 +68,8 @@ public class MapDepth : MonoBehaviour
 		if (!(mapLevel == 0) || !(mapLevel < 9)) {
 			mapLevel--;
 			set.setting(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
+			
+			PlayerPrefs.SetInt("maplevel", mapLevel);
 		}
 	}
 
@@ -73,6 +77,8 @@ public class MapDepth : MonoBehaviour
 		if (!(mapLevel == 9) || !(mapLevel > 0)) {
 			mapLevel++;
 			set.setting(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
+
+			PlayerPrefs.SetInt("maplevel", mapLevel);
 		}
 	}
 }

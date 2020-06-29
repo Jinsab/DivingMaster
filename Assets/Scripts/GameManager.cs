@@ -59,20 +59,30 @@ public class GameManager : MonoBehaviour
 	static int stemina;
 	static int maxDepth;
 	static int coin;
+	static int reward;
+	static int luck;
+	static int maplevel;
+
 	public static Data uphealth;
 	public static Data upstemina;
 	public static Data upswim;
 	public static Data uppower;
+	public static Data upreward;
+	public static Data upluck;
 
 	public static Dictionary<int, Data> HealthTable;
 	public static Dictionary<int, Data> SteminaTable;
 	public static Dictionary<int, Data> SwimTable;
 	public static Dictionary<int, Data> PowerTable;
+	public static Dictionary<int, Data> RewardTable;
+	public static Dictionary<int, Data> LuckTable;
 
 	public TextAsset health_text;
 	public TextAsset stemina_text;
 	public TextAsset swim_text;
 	public TextAsset power_text;
+	public TextAsset reward_text;
+	public TextAsset luck_text;
 
 	void Start()
 	{
@@ -97,6 +107,14 @@ public class GameManager : MonoBehaviour
 			return new Data(value);
 		});
 		PowerTable = CSVReader.ReadCSV<Data>(power_text.text, (value) =>
+		{
+			return new Data(value);
+		});
+		RewardTable = CSVReader.ReadCSV<Data>(reward_text.text, (value) =>
+		{
+			return new Data(value);
+		});
+		LuckTable = CSVReader.ReadCSV<Data>(luck_text.text, (value) =>
 		{
 			return new Data(value);
 		});
