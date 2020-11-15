@@ -23,7 +23,7 @@ public class CSVReader
 		return dict;
 	}
 
-	[MenuItem("Tool/PlayerPrefs/ClearCache")]
+	//[MenuItem("Tool/PlayerPrefs/ClearCache")]
 	public static void ClearPlayerPrefs()
 	{
 		PlayerPrefs.DeleteAll();

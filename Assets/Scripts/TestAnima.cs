@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TestAnima : MonoBehaviour
+public class TestAnima : MonoBehaviour, IPointerDownHandler
 {
-	Animator animator;
-	bool swim = false;
-
+	[SerializeField] Animator animator;
+	
 	void Start()
     {
 		animator = GetComponent<Animator>();
 	}
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerDown(PointerEventData eventData)
+	{
+		Running();
+
+		Debug.Log("Touch!!");
+	}
+
+	public void Running()
     {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			if (swim == true) swim = false;
-			else swim = true;
-		}	
-	
-		animator.SetBool("isswim", swim);
-    }
+		animator.SetTrigger("Swim");
+	}
 }

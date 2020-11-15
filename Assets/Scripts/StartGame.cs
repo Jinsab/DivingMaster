@@ -10,10 +10,16 @@ public class StartGame : MonoBehaviour
 	public Status status;
 	public GameObject player;
 	public UpgradeManager upgrade;
-	public Text text;
+	public GameObject endPanel;
+	public Text clearText;
+	public Text coinText;
+	public Button escapeButton;
+	private bool isEscape;
 
 	public IEnumerator InGame()
 	{
+		escapeButton.gameObject.SetActive(true);
+
 		yield return new WaitForSeconds(1f);
 
 		StartCoroutine("HpController");
@@ -33,7 +39,9 @@ public class StartGame : MonoBehaviour
 
 	IEnumerator DiePlayer()
 	{
+		status._HP = 0;
 		float time = 0f;
+
 		Quaternion quaternion = Quaternion.identity;
 		quaternion.eulerAngles = new Vector3(0, 0, -180f);
 
@@ -46,20 +54,48 @@ public class StartGame : MonoBehaviour
 		}
 
 		Debug.Log("정산 중");
-		yield return new WaitForSeconds(1f);
-
-		status._coin = ReturnCoin(status._coin);
-		status._maxDepth = ReturnMaxDepth(status._myDepth);
-
-		PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-		PlayerPrefs.SetInt("coin", status._coin);
+		endPanel.SetActive(true);
 		
-		Debug.Log("정산 완료");
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		if (isEscape)
+        {
+			coinText.text = (ReturnCoin(0) / 5).ToString();
+		}
+		else
+        {
+			coinText.text = (ReturnCoin(0)).ToString();
+		}
+		
+
+		while (true)
+		{
+			if (!endPanel.activeSelf)
+			{
+				if (isEscape)
+				{
+					int rCoin = (ReturnCoin(0) / 5);
+					status._coin += rCoin;
+				}
+				else
+				{
+					status._coin = ReturnCoin(status._coin);
+				}
+				
+				status._maxDepth = ReturnMaxDepth(status._myDepth);
+
+				PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+				PlayerPrefs.SetInt("coin", status._coin);
+
+				Debug.Log("정산 완료");
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			}
+
+			yield return null;
+		}
 	}
 
-	IEnumerator Clear() {
-		text.gameObject.SetActive(true);
+	IEnumerator Clear()
+	{
+		clearText.gameObject.SetActive(true);
 
 		float time = 0f;
 
@@ -84,7 +120,8 @@ public class StartGame : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
-	public int ReturnCoin(int retain) {
+	public int ReturnCoin(int retain)
+	{
 		int bonus;
 		bonus = PlayerPrefs.GetInt("reward");
 
@@ -94,7 +131,8 @@ public class StartGame : MonoBehaviour
 		return retain;
 	}
 
-	public int ReturnMaxDepth(int retain) {
+	public int ReturnMaxDepth(int retain)
+	{
 		if (status._maxDepth < retain)
 		{
 			retain = status._myDepth;
@@ -106,4 +144,10 @@ public class StartGame : MonoBehaviour
 
 		return retain;
 	}
+
+	public void Escape()
+    {
+		isEscape = true;
+		StartCoroutine(DiePlayer());
+    }
 }

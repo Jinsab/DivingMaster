@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Diving : MonoBehaviour, IPointerDownHandler
 {
@@ -13,12 +15,14 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 
 	public MapDepth depth;
 	public Status status;
-	
+	public AudioSource swimEffect;
+	public Text message;
+
 	private float stTime = 0f;
 	private float plusTime = 0f;
 	private int maxSP;
 	private int lastTouchSP;
-	
+
 	private void Start()
 	{
 		SetMaxSP(status._SP);
@@ -30,11 +34,14 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		depth.depthText.text = "수심 : " + status._myDepth + "M";
 
 		stTime += Time.deltaTime;
-		
-		if (stTime >= 3f && status._SP < maxSP)
+
+		if (status._HP > 0)
 		{
-			plusTime += Time.deltaTime;
-			status._SP = (int)Mathf.Clamp(Mathf.Lerp(lastTouchSP, maxSP, plusTime/3), 0, maxSP);
+			if (stTime >= 3f && status._SP < maxSP)
+			{
+				plusTime += Time.deltaTime;
+				status._SP = (int)Mathf.Clamp(Mathf.Lerp(lastTouchSP, maxSP, plusTime / 3), 0, maxSP);
+			}
 		}
 	}
 
@@ -47,7 +54,20 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 			StartCoroutine("Swim");
 		}
 		else {
+			status._myDepth += swimPower;
+
 			StopCoroutine("Swim");
+		}
+	}
+
+	public IEnumerator Fade()
+	{
+		message.color = new Color(message.color.r, message.color.g, message.color.b, 1);
+
+		while (message.color.a > 0.0f)
+		{
+			message.color = new Color(message.color.r, message.color.g, message.color.b, message.color.a - (Time.deltaTime / 2.0f));
+			yield return null;
 		}
 	}
 
@@ -57,22 +77,33 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		//Debug.Log("Get Swim Touch");
-		stTime = 0f;
-		plusTime = 0f;
-
-		if (status._SP - depth._SwimmingSP >= 0 && status._myDepth < depth._Depth)
+		if (status._HP > 0)
 		{
-			status._SP -= depth._SwimmingSP;
-			status._myDepth += touchPower;
+			//Debug.Log("Get Swim Touch");
+			stTime = 0f;
+			plusTime = 0f;
+
+			if (status._SP - depth._SwimmingSP >= 0 && status._myDepth < depth._Depth)
+			{
+				status._SP -= depth._SwimmingSP;
+				status._myDepth += touchPower;
+
+				swimEffect.Play();
+			}
+			else {
+				if (status._SP - depth._SwimmingSP <= 0)
+				{
+					StopCoroutine("Fade");
+					StartCoroutine("Fade");
+
+					Debug.Log("Warring: not have stemina!!");
+				}
+				else
+					Debug.Log("Warring: your already clear!!");
+			}
+
+			lastTouchSP = status._SP;
 		}
-		else {
-			if (status._SP - depth._SwimmingSP <= 0)
-				Debug.Log("Warring: not have stemina!!");
-			else
-				Debug.Log("Warring: your already clear!!");
-		}
-		lastTouchSP = status._SP;
 	}
 
 	public void SetMaxSP(int sp) => maxSP = sp;
