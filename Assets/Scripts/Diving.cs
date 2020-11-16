@@ -9,6 +9,7 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 {
 	[SerializeField] private int swimPower;
 	[SerializeField] private int touchPower;
+	public Animator animator;
 
 	public int _swimPower { get => swimPower; set => swimPower = value; }
 	public int _touchPower { get => touchPower; set => touchPower = value; }
@@ -54,7 +55,11 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 			StartCoroutine("Swim");
 		}
 		else {
-			status._myDepth += swimPower;
+			// 체력으로 사망 시 올려줘야됨
+			if (status._HP == 0)
+			{
+				status._myDepth += swimPower;
+			}
 
 			StopCoroutine("Swim");
 		}
@@ -71,10 +76,6 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 		}
 	}
 
-	//IEnumerator Clear() {
-	//	yield return new WaitForSeconds(1f);
-	//}
-
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		if (status._HP > 0)
@@ -89,6 +90,9 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 				status._myDepth += touchPower;
 
 				swimEffect.Play();
+				Running();
+
+				Debug.Log("Touch!!");
 			}
 			else {
 				if (status._SP - depth._SwimmingSP <= 0)
@@ -104,6 +108,11 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 
 			lastTouchSP = status._SP;
 		}
+	}
+
+	public void Running()
+	{
+		animator.Play("Swim", -1);
 	}
 
 	public void SetMaxSP(int sp) => maxSP = sp;

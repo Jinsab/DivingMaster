@@ -39,7 +39,7 @@ public class MapDepth : MonoBehaviour
 	[SerializeField] private int WaterPressure = 5; // 수압 (1초당 HP 깎이는 양)
 	[SerializeField] private int SwimmingSP = 5; // 저항 (터치당 SP 깎이는 양)
 	[SerializeField] private int Depth; // 깊이 (최대 깊이)
-
+	[SerializeField] private int maxDepth; // 현재 달성한 최고기록
 	public string _Name { get => Name; set => Name = value; }
 	public int _WaterPressure { get => WaterPressure; set => WaterPressure = value; }
 	public int _SwimmingSP { get => SwimmingSP; set => SwimmingSP = value; }
@@ -47,21 +47,38 @@ public class MapDepth : MonoBehaviour
 	public int mapLevel = 0;
 	public Text depthText;
 	public Text maxDepthText;
+	public Text unLockMessage;
 	public SettingData set;
-
+	
 	private void Start()
 	{
 		mapLevel = PlayerPrefs.GetInt("maplevel");
+		maxDepth = PlayerPrefs.GetInt("maxDepth");
 
 		set = new SettingData(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
 	}
 
 	public void Setting()
 	{
-		Name = stageName[mapLevel];
-		WaterPressure = stagePreessure[mapLevel];
-		SwimmingSP = stageSwimming[mapLevel];
-		Depth = stageDepth[mapLevel];
+		if(mapLevel == 0)
+        {
+			Name = stageName[mapLevel];
+			WaterPressure = stagePreessure[mapLevel];
+			SwimmingSP = stageSwimming[mapLevel];
+			Depth = stageDepth[mapLevel];
+		}
+		else if (maxDepth > stageDepth[mapLevel-1])
+		{
+			Name = stageName[mapLevel];
+			WaterPressure = stagePreessure[mapLevel];
+			SwimmingSP = stageSwimming[mapLevel];
+			Depth = stageDepth[mapLevel];
+		}
+		else
+        {
+			StopCoroutine("Fade");
+			StartCoroutine("Fade");
+        }
 	}
 
 	public void PreviousLevel() {
@@ -79,6 +96,17 @@ public class MapDepth : MonoBehaviour
 			set.setting(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
 
 			PlayerPrefs.SetInt("maplevel", mapLevel);
+		}
+	}
+
+	public IEnumerator Fade()
+	{
+		unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, 1);
+
+		while (unLockMessage.color.a > 0.0f)
+		{
+			unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, unLockMessage.color.a - (Time.deltaTime / 2.0f));
+			yield return null;
 		}
 	}
 }
