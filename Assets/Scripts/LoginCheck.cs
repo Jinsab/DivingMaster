@@ -7,8 +7,6 @@ using GooglePlayGames.BasicApi;
 
 public class LoginCheck : MonoBehaviour
 {
-    public Text myLog;
-    public RawImage myImage;
     public Button loginButton;
     public Button logoutButton;
 
@@ -36,7 +34,7 @@ public class LoginCheck : MonoBehaviour
     {
         if (Social.localUser.authenticated)
         {
-            Debug.Log(Social.localUser.userName);
+            //Debug.Log(Social.localUser.userName);
         }
         else
         {
@@ -44,12 +42,14 @@ public class LoginCheck : MonoBehaviour
             {
                 if (success)
                 {
-                    Debug.Log(Social.localUser.userName);
-                    myLog.text = "name : " + Social.localUser.userName + "\n";
+                    //Debug.Log(Social.localUser.userName);
+
+                    loginButton.gameObject.SetActive(true);
+                    logoutButton.gameObject.SetActive(false);
                 }
                 else
                 {
-                    Debug.Log("Login Fail");
+                    //Debug.Log("Login Fail");
                 }
             });
         }
@@ -58,6 +58,9 @@ public class LoginCheck : MonoBehaviour
     // 수동 로그아웃
     public void OnBtnLogoutClicked()
     {
+        logoutButton.gameObject.SetActive(true);
+        loginButton.gameObject.SetActive(false);
+
         ((PlayGamesPlatform)Social.Active).SignOut();
     }
 
@@ -66,23 +69,7 @@ public class LoginCheck : MonoBehaviour
     {
         if (success)
         {
-            StartCoroutine(UserPictureLoad());
+            //Debug.Log("연결 성공!");
         }
-    }
-
-    // 유저 이미지 받아오기
-    IEnumerator UserPictureLoad()
-    {
-        // 최초 유저 이미지
-        Texture2D pic = Social.localUser.image;
-
-        // 구글 아바타 이미지 여부를 확인 후 이미지 생성
-        while (pic == null)
-        {
-            pic = Social.localUser.image;
-            yield return null;
-        }
-
-        myImage.texture = pic;
     }
 }
