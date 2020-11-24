@@ -55,8 +55,8 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 			StartCoroutine("Swim");
 		}
 		else {
-			// 체력으로 사망 시 올려줘야됨
-			if (status._HP == 0)
+			// 체력으로 사망 시 올려줘야됨, 또한 Escape 탈출 시엔 올려주면 안됨
+			if (status._HP == 0 && !status.isEscape)
 			{
 				status._myDepth += swimPower;
 			}

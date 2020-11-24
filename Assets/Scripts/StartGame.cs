@@ -14,9 +14,10 @@ public class StartGame : MonoBehaviour
 	public GameObject rewardEndPanel;
 	public Text clearText;
 	public Text coinText;
+	public Text rewardCoinText;
 	public Button escapeButton;
 	public bool isReward = false;
-	private bool isEscape = false;
+	//private bool isEscape = false;
 
 	public IEnumerator InGame()
 	{
@@ -41,7 +42,6 @@ public class StartGame : MonoBehaviour
 
 	IEnumerator DiePlayer()
 	{
-		status._HP = 0;
 		float time = 0f;
 
 		Quaternion quaternion = Quaternion.identity;
@@ -62,13 +62,13 @@ public class StartGame : MonoBehaviour
         {
 			rewardEndPanel.SetActive(true);
 
-			if (isEscape)
+			if (status.isEscape)
 			{
-				coinText.text = (ReturnCoin(0) / 5).ToString();
+				rewardCoinText.text = ReturnCoin(0, 1, 5).ToString();
 			}
 			else
 			{
-				coinText.text = (ReturnCoin(0)).ToString();
+				rewardCoinText.text = ReturnCoin(0, 1, 1).ToString();
 			}
 
 			while (true)
@@ -77,14 +77,13 @@ public class StartGame : MonoBehaviour
 				{
 					if (isReward)
 					{
-						if (isEscape)
+						if (status.isEscape)
 						{
-							int rCoin = (ReturnCoin(0) / 5) * 2;
-							status._coin += rCoin;
+							status._coin = ReturnCoin(status._coin, 2, 5);
 						}
 						else
 						{
-							status._coin = ReturnCoin(status._coin) * 2;
+							status._coin = ReturnCoin(status._coin, 2, 1);
 						}
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
@@ -97,14 +96,13 @@ public class StartGame : MonoBehaviour
 					}
 					else
 					{
-						if (isEscape)
+						if (status.isEscape)
 						{
-							int rCoin = (ReturnCoin(0) / 5);
-							status._coin += rCoin;
+							status._coin = ReturnCoin(status._coin, 1, 5);
 						}
 						else
 						{
-							status._coin = ReturnCoin(status._coin);
+							status._coin = ReturnCoin(status._coin, 1, 1);
 						}
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
@@ -124,27 +122,26 @@ public class StartGame : MonoBehaviour
         {
 			endPanel.SetActive(true);
 
-			if (isEscape)
+			if (status.isEscape)
 			{
-				coinText.text = (ReturnCoin(0) / 5).ToString();
+				coinText.text = ReturnCoin(0, 1, 5).ToString();
 			}
 			else
 			{
-				coinText.text = (ReturnCoin(0)).ToString();
+				coinText.text = ReturnCoin(0, 1, 1).ToString();
 			}
 
 			while (true)
 			{
 				if (!endPanel.activeSelf)
 				{
-					if (isEscape)
+					if (status.isEscape)
 					{
-						int rCoin = (ReturnCoin(0) / 5);
-						status._coin += rCoin;
+						status._coin = ReturnCoin(status._coin, 1, 5);
 					}
 					else
 					{
-						status._coin = ReturnCoin(status._coin);
+						status._coin = ReturnCoin(status._coin, 1, 1);
 					}
 
 					status._maxDepth = ReturnMaxDepth(status._myDepth);
@@ -163,6 +160,7 @@ public class StartGame : MonoBehaviour
 
 	IEnumerator Clear()
 	{
+
 		clearText.gameObject.SetActive(true);
 
 		float time = 0f;
@@ -178,14 +176,7 @@ public class StartGame : MonoBehaviour
 		Debug.Log("정산 중");
 		rewardEndPanel.SetActive(true);
 
-		if (isEscape)
-		{
-			coinText.text = (ReturnCoin(0) / 5).ToString();
-		}
-		else
-		{
-			coinText.text = (ReturnCoin(0)).ToString();
-		}
+		rewardCoinText.text = ReturnCoin(0, 1, 1).ToString();
 
 		while (true)
 		{
@@ -193,15 +184,7 @@ public class StartGame : MonoBehaviour
 			{
 				if (isReward)
 				{
-					if (isEscape)
-					{
-						int rCoin = (ReturnCoin(0) / 5) * 2;
-						status._coin += rCoin;
-					}
-					else
-					{
-						status._coin = ReturnCoin(status._coin) * 2;
-					}
+					status._coin = ReturnCoin(status._coin, 2, 1);
 
 					status._maxDepth = ReturnMaxDepth(status._myDepth);
 
@@ -213,15 +196,8 @@ public class StartGame : MonoBehaviour
 				}
 				else
 				{
-					if (isEscape)
-					{
-						int rCoin = (ReturnCoin(0) / 5);
-						status._coin += rCoin;
-					}
-					else
-					{
-						status._coin = ReturnCoin(status._coin);
-					}
+					status._coin = ReturnCoin(status._coin, 1, 1);
+
 					status._maxDepth = ReturnMaxDepth(status._myDepth);
 
 					PlayerPrefs.SetInt("maxDepth", status._maxDepth);
@@ -236,12 +212,14 @@ public class StartGame : MonoBehaviour
 		}
 	}
 
-	public int ReturnCoin(int retain)
+	// retain = 플레이어 보유 코인, correction = 코인 배율, reverse = 코인 역배율
+	public int ReturnCoin(int retain, int correction, int reverse)
 	{
 		int bonus;
 		bonus = PlayerPrefs.GetInt("reward");
 
-		int coin = ((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10));
+		// correction 2라면 2배, reverse 5라면 0.2배
+		int coin = (((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10)) / reverse) * correction;
 		retain += coin;
 
 		return retain;
@@ -263,7 +241,8 @@ public class StartGame : MonoBehaviour
 
 	public void Escape()
     {
-		isEscape = true;
+		status.isEscape = true;
+		status._HP = 0;
 		StartCoroutine(DiePlayer());
     }
 }

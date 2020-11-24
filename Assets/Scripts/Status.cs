@@ -16,6 +16,7 @@ public class Status : MonoBehaviour
 	public int _myDepth { get => myDepth; set => myDepth = value; }
 	public int _maxDepth { get => maxDepth; set => maxDepth = value; }
 	public int _coin { get => coin; set => coin = value; }
+	public bool isEscape = false;
 
 	public Text hpText;
 	public Text spText;
