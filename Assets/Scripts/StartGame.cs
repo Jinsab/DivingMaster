@@ -35,9 +35,18 @@ public class StartGame : MonoBehaviour
 
 		yield return new WaitForSeconds(1f);
 
-		if (status._HP <= 0) StartCoroutine("DiePlayer");
-		else if (depth._Depth <= status._myDepth) StartCoroutine("Clear");
-		else StartCoroutine("HpController");
+		if (status._HP <= 0 && !status.isEscape)
+		{
+			StartCoroutine("DiePlayer");
+		}
+		else if (depth._Depth <= status._myDepth)
+		{
+			StartCoroutine("Clear");
+		}
+		else
+		{
+			StartCoroutine("HpController");
+		}
 	}
 
 	IEnumerator DiePlayer()
@@ -62,7 +71,7 @@ public class StartGame : MonoBehaviour
         {
 			rewardEndPanel.SetActive(true);
 
-			if (status.isEscape)
+			if (status.isEscape == true)
 			{
 				rewardCoinText.text = ReturnCoin(0, 1, 5).ToString();
 			}
@@ -75,9 +84,9 @@ public class StartGame : MonoBehaviour
 			{
 				if (!rewardEndPanel.activeSelf)
 				{
-					if (isReward)
+					if (isReward == true)
 					{
-						if (status.isEscape)
+						if (status.isEscape == true)
 						{
 							status._coin = ReturnCoin(status._coin, 2, 5);
 						}
@@ -96,7 +105,7 @@ public class StartGame : MonoBehaviour
 					}
 					else
 					{
-						if (status.isEscape)
+						if (status.isEscape == true)
 						{
 							status._coin = ReturnCoin(status._coin, 1, 5);
 						}
@@ -182,7 +191,7 @@ public class StartGame : MonoBehaviour
 		{
 			if (!rewardEndPanel.activeSelf)
 			{
-				if (isReward)
+				if (isReward == true)
 				{
 					status._coin = ReturnCoin(status._coin, 2, 1);
 
@@ -219,7 +228,10 @@ public class StartGame : MonoBehaviour
 		bonus = PlayerPrefs.GetInt("reward");
 
 		// correction 2라면 2배, reverse 5라면 0.2배
-		int coin = (((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10)) / reverse) * correction;
+		int coin = ((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10)) / reverse * correction;
+
+		Debug.Log("Have Coin: " + coin);
+
 		retain += coin;
 
 		return retain;
@@ -235,12 +247,13 @@ public class StartGame : MonoBehaviour
 		{
 			retain = status._maxDepth;
 		}
-
+		
 		return retain;
 	}
 
 	public void Escape()
     {
+		escapeButton.gameObject.SetActive(false);
 		status.isEscape = true;
 		status._HP = 0;
 		StartCoroutine(DiePlayer());
