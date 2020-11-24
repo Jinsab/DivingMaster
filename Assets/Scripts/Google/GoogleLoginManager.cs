@@ -170,7 +170,10 @@ public class GoogleLoginManager : MonoBehaviour
                 RequestEmail = true,
                 // Copy this value from the google-service.json file.
                 // oauth_client with type == 3
-                WebClientId = "166022739614-1162j1l9mpus665rtrjcq1tplnnai8lh.apps.googleusercontent.com"
+
+                //166022739614-1162j1l9mpus665rtrjcq1tplnnai8lh.apps.googleusercontent.com
+                //166022739614-9v5bbtsg69d0aqb4mmnrs8alnkkkb0de.apps.googleusercontent.com
+                WebClientId = "166022739614-9v5bbtsg69d0aqb4mmnrs8alnkkkb0de.apps.googleusercontent.com"
             };
         }
 

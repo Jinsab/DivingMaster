@@ -171,7 +171,7 @@ PlayerSettings:
     Android: com.Indie.QSS
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 10
+  AndroidBundleVersionCode: 11
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -249,7 +249,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/kimji/Downloads/keyy/user.keystore
+  AndroidKeystoreName: C:/Users/user/Downloads/key/user.keystore
   AndroidKeyaliasName: indieqss
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
