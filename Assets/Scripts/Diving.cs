@@ -92,7 +92,7 @@ public class Diving : MonoBehaviour, IPointerDownHandler
 				swimEffect.Play();
 				Running();
 
-				Debug.Log("Touch!!");
+				//Debug.Log("Touch!!");
 			}
 			else {
 				if (status._SP - depth._SwimmingSP <= 0)
