@@ -230,7 +230,7 @@ public class StartGame : MonoBehaviour
 		// correction 2라면 2배, reverse 5라면 0.2배
 		int coin = ((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10)) / reverse * correction;
 
-		Debug.Log("Have Coin: " + coin);
+		//Debug.Log("Have Coin: " + coin);
 
 		retain += coin;
 
