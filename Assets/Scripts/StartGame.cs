@@ -15,6 +15,7 @@ public class StartGame : MonoBehaviour
 	public Text clearText;
 	public Text coinText;
 	public Text rewardCoinText;
+	public Text newText;
 	public Button escapeButton;
 	public bool isReward = false;
 	//private bool isEscape = false;
@@ -169,18 +170,23 @@ public class StartGame : MonoBehaviour
 
 	IEnumerator Clear()
 	{
-
 		clearText.gameObject.SetActive(true);
 
-		float time = 0f;
+        float time = 0f;
 
-		while (transform.position.y > 0f)
-		{
-			time += Time.deltaTime;
-			transform.position = new Vector3(0f, Mathf.Lerp(transform.position.y, 0f, time * 0.5f), 0f);
+        while (transform.position.y > 0f)
+        {
+            time += Time.deltaTime;
+            transform.position = new Vector3(0f, Mathf.Lerp(transform.position.y, 0f, time * 0.5f), 0f);
 
-			yield return null;
-		}
+            yield return null;
+        }
+
+		// 신기록 미갱신
+		if (status._maxDepth > status._myDepth)
+        {
+			newText.gameObject.SetActive(false);
+        }
 
 		Debug.Log("정산 중");
 		rewardEndPanel.SetActive(true);
