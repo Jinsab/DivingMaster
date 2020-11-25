@@ -3,6 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public struct Map
+{
+	public static string stringFormat = "Level:{0}:Name:{1}:Preessure:{2},Swimming:{3},StageDepth:{4}";
+
+	public override string ToString()
+	{
+		return string.Format(stringFormat, Level, Name, Preessure, Swimming, StageDepth);
+	}
+
+	public Map(string data, int defaultLevel = 1, string defaultName = "안전한 여울", int defaultPreessure = 5, int defaultSwimming = 5, int defaultStageDepth = 100)
+	{
+		Level = defaultLevel;
+		Name = defaultName;
+		Preessure = defaultPreessure;
+		Swimming = defaultSwimming;
+		StageDepth = defaultStageDepth;
+
+		if (string.IsNullOrEmpty(data))
+			return;
+
+		var values = data.Split(',');
+
+		Level = int.Parse(values[0].Split(':')[1]);
+		Name = values[1].Split(':')[1].ToString();
+		Preessure = int.Parse(values[2].Split(':')[1]);
+		Swimming = int.Parse(values[3].Split(':')[1]);
+		StageDepth = int.Parse(values[4].Split(':')[1]);
+	}
+
+	public Map(string[] values, int defaultLevel = 1, string defaultName = "안전한 여울", int defaultPreessure = 5, int defaultSwimming = 5, int defaultStageDepth = 100)
+	{
+		Level = defaultLevel;
+		Name = defaultName;
+		Preessure = defaultPreessure;
+		Swimming = defaultSwimming;
+		StageDepth = defaultStageDepth;
+
+		if (string.IsNullOrEmpty(values[0]))
+			return;
+
+		Level = int.Parse(values[0]);
+		Name = values[1].ToString();
+		Preessure = int.Parse(values[2]);
+		Swimming = int.Parse(values[3]);
+		StageDepth = int.Parse(values[4]);
+	}
+
+	public int Level;
+	public string Name;
+	public int Preessure;
+	public int Swimming;
+	public int StageDepth;
+}
+
 public struct SettingData
 {
 	public SettingData(string name, int water, int sp, int depth) {
@@ -28,12 +82,10 @@ public struct SettingData
 
 public class MapDepth : MonoBehaviour
 {
-	private List<string> stageName = new List<string>() {"안전한 산호지대", "초원 평야", "깊고 푸른 바다", "빛을 잃어가는 바다",
-														 "검고 어두운 바다", "심연", "신비로운 바다", " 심연 깊디 깊은 곳",
-														 "심해 급락 지역", "잊혀져 가는 바다"};
-	private List<int> stagePreessure = new List<int>() { 5, 7, 10, 15, 20, 30, 40, 50, 76, 110 };
-	private List<int> stageSwimming = new List<int>() { 5, 8, 12, 19, 27, 40, 55, 85, 130, 200 };
-	private List<int> stageDepth = new List<int>() { 200, 500, 800, 1300, 2000, 3600, 6200, 7800, 11000, 99999999 };
+	public static Map MapInfomation;
+	public static Map MapPreviousInfomation;
+	public static Dictionary<int, Map> MapTable;
+	public TextAsset map_text;
 
 	[SerializeField] private string Name = "";
 	[SerializeField] private int WaterPressure = 5; // 수압 (1초당 HP 깎이는 양)
@@ -44,35 +96,53 @@ public class MapDepth : MonoBehaviour
 	public int _WaterPressure { get => WaterPressure; set => WaterPressure = value; }
 	public int _SwimmingSP { get => SwimmingSP; set => SwimmingSP = value; }
 	public int _Depth { get => Depth; set => Depth = value; }
-	public int mapLevel = 0;
+	public int mapLevel = 1;
 	public Text depthText;
 	public Text maxDepthText;
+	public Text mapMaxDepthText;
 	public Text unLockMessage;
 	public SettingData set;
-	
+
 	private void Start()
 	{
 		mapLevel = PlayerPrefs.GetInt("maplevel");
+
+		Initialize();
+
+		MapInfomation = MapTable[mapLevel];
+
+		Name = MapInfomation.Name;
+		WaterPressure = MapInfomation.Preessure;
+		SwimmingSP = MapInfomation.Swimming;
+		Depth = MapInfomation.StageDepth;
+
+		mapLevel = PlayerPrefs.GetInt("maplevel");
 		maxDepth = PlayerPrefs.GetInt("maxDepth");
 
-		set = new SettingData(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
-	}
+		mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
+    }
 
 	public void Setting()
 	{
-		if(mapLevel == 0)
+        if (mapLevel == 1)
         {
-			Name = stageName[mapLevel];
-			WaterPressure = stagePreessure[mapLevel];
-			SwimmingSP = stageSwimming[mapLevel];
-			Depth = stageDepth[mapLevel];
-		}
-		else if (maxDepth > stageDepth[mapLevel-1])
+			Name = MapInfomation.Name;
+            WaterPressure = MapInfomation.Preessure;
+            SwimmingSP = MapInfomation.Swimming;
+            Depth = MapInfomation.StageDepth;
+
+            mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
+        }
+        else if (maxDepth > MapPreviousInfomation.StageDepth)
 		{
-			Name = stageName[mapLevel];
-			WaterPressure = stagePreessure[mapLevel];
-			SwimmingSP = stageSwimming[mapLevel];
-			Depth = stageDepth[mapLevel];
+			MapPreviousInfomation = MapTable[mapLevel - 1];
+
+			Name = MapInfomation.Name;
+			WaterPressure = MapInfomation.Preessure;
+			SwimmingSP = MapInfomation.Swimming;
+			Depth = MapInfomation.StageDepth;
+
+			mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
 		}
 		else
         {
@@ -82,20 +152,22 @@ public class MapDepth : MonoBehaviour
 	}
 
 	public void PreviousLevel() {
-		if (!(mapLevel == 0) || !(mapLevel < 9)) {
+		if (!(mapLevel == 1) || !(mapLevel < 24)) {
 			mapLevel--;
-			set.setting(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
-			
+
 			PlayerPrefs.SetInt("maplevel", mapLevel);
+
+			MapInfomation = MapTable[mapLevel];
 		}
 	}
 
 	public void NextLevel() {
-		if (!(mapLevel == 9) || !(mapLevel > 0)) {
+		if (!(mapLevel == 24) || !(mapLevel > 1)) {
 			mapLevel++;
-			set.setting(stageName[mapLevel], stagePreessure[mapLevel], stageSwimming[mapLevel], stageDepth[mapLevel]);
 
 			PlayerPrefs.SetInt("maplevel", mapLevel);
+
+			MapInfomation = MapTable[mapLevel];
 		}
 	}
 
@@ -108,5 +180,13 @@ public class MapDepth : MonoBehaviour
 			unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, unLockMessage.color.a - (Time.deltaTime / 2.0f));
 			yield return null;
 		}
+	}
+
+	public void Initialize()
+	{
+		MapTable = CSVReader.ReadCSV<Map>(map_text.text, (value) =>
+		{
+			return new Map(value);
+		});
 	}
 }
