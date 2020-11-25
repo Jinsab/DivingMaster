@@ -373,8 +373,8 @@ GameObject:
   - component: {fileID: 312433217}
   - component: {fileID: 312433216}
   - component: {fileID: 312433215}
-  - component: {fileID: 312433214}
   - component: {fileID: 312433220}
+  - component: {fileID: 312433214}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2743,7 +2743,7 @@ GameObject:
   - component: {fileID: 1822252222}
   - component: {fileID: 1822252221}
   m_Layer: 0
-  m_Name: BackGroundManager
+  m_Name: DontDestroyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
