@@ -36,6 +36,9 @@ public class AdmobVideoScript : MonoBehaviour
          * 
          */
         //videoID = "여러분들의 광고 ID가 들어가는 곳입니다. ca-app-pub-숫자 / 숫자 형식입니다.";
+
+        //reward.isReward = false;
+
         videoID = "ca-app-pub-3940256099942544/5224354917";
         videoAd = new RewardedAd(videoID);
         Handle(videoAd);
@@ -119,5 +122,6 @@ public class AdmobVideoScript : MonoBehaviour
     {
         //보상이 들어갈 곳입니다.
         reward.isReward = true;
+        reward.rewardEndPanel.SetActive(false);
     }
 }
