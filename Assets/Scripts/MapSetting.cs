@@ -38,7 +38,7 @@ public class MapSetting : MonoBehaviour
 			waterPressure.text = "수압: " + "<color=#ff0000>" + _Map.Preessure.ToString() + "</color>";
 			spPower.text = "저항: " + "<color=#ff0000>" + _Map.Swimming.ToString() + "</color>";
 			depth.text = "깊이: " + "<color=#ff0000>" + _Map.StageDepth.ToString() + "</color>";
-			unlockDepth.text = "해제: " + "<color=#ff0000>" + 0 + "</color>";
+			unlockDepth.text = "해금: " + "<color=#ff0000>" + 0 + "</color>";
 		}
 		else
         {
@@ -49,7 +49,7 @@ public class MapSetting : MonoBehaviour
 			waterPressure.text = "수압: " + "<color=#ff0000>" + _Map.Preessure.ToString() + "</color>";
 			spPower.text = "저항: " + "<color=#ff0000>" + _Map.Swimming.ToString() + "</color>";
 			depth.text = "깊이: " + "<color=#ff0000>" + _Map.StageDepth.ToString() + "</color>";
-			unlockDepth.text = "해제: " + "<color=#ff0000>" + _PriviousMap.StageDepth.ToString() + "</color>";
+			unlockDepth.text = "해금: " + "<color=#ff0000>" + _PriviousMap.StageDepth.ToString() + "</color>";
 		}
 	}
 }
