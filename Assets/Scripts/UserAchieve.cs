@@ -59,10 +59,4 @@ public class UserAchieve : MonoBehaviour
             PlayGamesPlatform.Instance.IncrementAchievement(GPGSIds.achievement_11000_meters_over, 10, null);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
