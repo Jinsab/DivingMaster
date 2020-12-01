@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Panel : MonoBehaviour, IPointerDownHandler
 {
 	public StartGame startGame;
+	public GameObject inGamePanel;
 	public Button[] option;
 	public Diving diving;
 
@@ -19,7 +20,9 @@ public class Panel : MonoBehaviour, IPointerDownHandler
         {
 			option[i].gameObject.SetActive(false);
 		}
-		
+
+		inGamePanel.SetActive(true);
+
 		startGame.StartCoroutine("InGame");
 		diving.StartCoroutine("Swim");
 	}

@@ -14,7 +14,7 @@ public class PageInfomation : MonoBehaviour
 
     private int index = 0;
 
-    void Start()
+    private void Start()
     {
         // 여러 페이지가 활성화 되있을 수 있음
         foreach (GameObject page in pages)
