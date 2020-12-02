@@ -118,7 +118,7 @@ public class UpgradeManager : MonoBehaviour
 
 			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 			SecurePlayerPrefs.SetString("stemina", Stemina.Value.ToString(), SecurePlayerPrefs.GetData("Ysera"));
-			PlayerPrefs.SetString("uphealth", Stemina.ToString());
+			PlayerPrefs.SetString("upstemina", Stemina.ToString());
 
 			SettingCoin(getCoin);
 			statText.SettingStemina(Stemina);
