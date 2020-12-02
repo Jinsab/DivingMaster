@@ -18,6 +18,7 @@ public class StartGame : MonoBehaviour
 	public Text newText;
 	public Button escapeButton;
 	public bool isReward = false;
+
 	//private bool isEscape = false;
 
 	public IEnumerator InGame()
@@ -74,7 +75,7 @@ public class StartGame : MonoBehaviour
 
 			if (status.isEscape == true)
 			{
-				rewardCoinText.text = ReturnCoin(0, 1, 5).ToString();
+				rewardCoinText.text = ReturnCoin(0, 1, 4 + status.dieCount).ToString();
 			}
 			else
 			{
@@ -89,11 +90,12 @@ public class StartGame : MonoBehaviour
 					{
 						if (status.isEscape == true)
 						{
-							status._coin = ReturnCoin(status._coin, 2, 5);
+							status._coin = ReturnCoin(status._coin, 2, 4 + status.dieCount);
 						}
 						else
 						{
 							status._coin = ReturnCoin(status._coin, 2, 1);
+							CountDown();
 						}
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
@@ -108,12 +110,14 @@ public class StartGame : MonoBehaviour
 					{
 						if (status.isEscape == true)
 						{
-							status._coin = ReturnCoin(status._coin, 1, 5);
+							status._coin = ReturnCoin(status._coin, 1, 4 + status.dieCount);
 						}
 						else
 						{
 							status._coin = ReturnCoin(status._coin, 1, 1);
+							CountDown();
 						}
+
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
 						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
@@ -134,7 +138,7 @@ public class StartGame : MonoBehaviour
 
 			if (status.isEscape)
 			{
-				coinText.text = ReturnCoin(0, 1, 5).ToString();
+				coinText.text = ReturnCoin(0, 1, 4 + status.dieCount).ToString();
 			}
 			else
 			{
@@ -147,11 +151,12 @@ public class StartGame : MonoBehaviour
 				{
 					if (status.isEscape)
 					{
-						status._coin = ReturnCoin(status._coin, 1, 5);
+						status._coin = ReturnCoin(status._coin, 1, 4 + status.dieCount);
 					}
 					else
 					{
 						status._coin = ReturnCoin(status._coin, 1, 1);
+						CountDown();
 					}
 
 					status._maxDepth = ReturnMaxDepth(status._myDepth);
@@ -186,44 +191,92 @@ public class StartGame : MonoBehaviour
 		if (status._maxDepth > status._myDepth)
         {
 			newText.gameObject.SetActive(false);
-        }
 
-		Debug.Log("정산 중");
-		rewardEndPanel.SetActive(true);
+			Debug.Log("정산 중");
+			rewardEndPanel.SetActive(true);
 
-		rewardCoinText.text = ReturnCoin(0, 1, 1).ToString();
+			rewardCoinText.text = ReturnCoin(0, 4, 5).ToString();
 
-		while (true)
-		{
-			if (!rewardEndPanel.activeSelf)
+			while (true)
 			{
-				if (isReward == true)
+				if (!rewardEndPanel.activeSelf)
 				{
-					status._coin = ReturnCoin(status._coin, 2, 1);
+					if (isReward == true)
+					{
+						status._coin = ReturnCoin(status._coin, 8, 5);
 
-					status._maxDepth = ReturnMaxDepth(status._myDepth);
+						CountDown();
 
-					PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-					PlayerPrefs.SetInt("coin", status._coin);
+						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-					Debug.Log("정산 완료");
-					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						PlayerPrefs.SetInt("coin", status._coin);
+
+						Debug.Log("정산 완료");
+						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					}
+					else
+					{
+						status._coin = ReturnCoin(status._coin, 4, 5);
+
+						CountDown();
+
+						status._maxDepth = ReturnMaxDepth(status._myDepth);
+
+						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						PlayerPrefs.SetInt("coin", status._coin);
+
+						Debug.Log("정산 완료");
+						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					}
 				}
-				else
-				{
-					status._coin = ReturnCoin(status._coin, 1, 1);
 
-					status._maxDepth = ReturnMaxDepth(status._myDepth);
-
-					PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-					PlayerPrefs.SetInt("coin", status._coin);
-
-					Debug.Log("정산 완료");
-					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-				}
+				yield return null;
 			}
+		}
+		else
+        {
+			Debug.Log("정산 중");
+			rewardEndPanel.SetActive(true);
 
-			yield return null;
+			rewardCoinText.text = ReturnCoin(0, 1, 1).ToString();
+
+			while (true)
+			{
+				if (!rewardEndPanel.activeSelf)
+				{
+					if (isReward == true)
+					{
+						status._coin = ReturnCoin(status._coin, 2, 1);
+
+						CountDown();
+
+						status._maxDepth = ReturnMaxDepth(status._myDepth);
+
+						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						PlayerPrefs.SetInt("coin", status._coin);
+
+						Debug.Log("정산 완료");
+						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					}
+					else
+					{
+						status._coin = ReturnCoin(status._coin, 1, 1);
+
+						CountDown();
+
+						status._maxDepth = ReturnMaxDepth(status._myDepth);
+
+						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						PlayerPrefs.SetInt("coin", status._coin);
+
+						Debug.Log("정산 완료");
+						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					}
+				}
+
+				yield return null;
+			}
 		}
 	}
 
@@ -262,6 +315,27 @@ public class StartGame : MonoBehaviour
 		escapeButton.gameObject.SetActive(false);
 		status.isEscape = true;
 		status._HP = 0;
+		status.dieCount += 1;
+		PlayerPrefs.SetInt("dieCount", status.dieCount);
 		StartCoroutine(DiePlayer());
     }
+
+	public void CountDown()
+    {
+		// 클리어하면 5스택씩 다운
+		for (int i = 0; i < 5; i++)
+        {
+			// dieCount의 최소 카운트는 0
+			if (0 < status.dieCount)
+            {
+				status.dieCount--;
+            }
+			else
+            {
+				break;
+            }
+        }
+
+		PlayerPrefs.SetInt("dieCount", status.dieCount);
+	}
 }
