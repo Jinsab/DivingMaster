@@ -10,13 +10,14 @@ public class Status : MonoBehaviour
 	[SerializeField] private int myDepth;
 	[SerializeField] private int maxDepth;
 	[SerializeField] private int coin;
-
+	
 	public int _HP { get => HP; set => HP = value; }
 	public int _SP { get => SP; set => SP = value; }
 	public int _myDepth { get => myDepth; set => myDepth = value; }
 	public int _maxDepth { get => maxDepth; set => maxDepth = value; }
 	public int _coin { get => coin; set => coin = value; }
 	public bool isEscape = false;
+	public int dieCount;
 
 	public Text hpText;
 	public Text spText;
@@ -34,6 +35,7 @@ public class Status : MonoBehaviour
 
 		coin = PlayerPrefs.GetInt("coin");
 		maxDepth = PlayerPrefs.GetInt("maxDepth");
+		dieCount = PlayerPrefs.GetInt("dieCount");
 	}
 
 	private void Update()
