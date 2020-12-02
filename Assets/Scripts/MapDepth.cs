@@ -100,8 +100,11 @@ public class MapDepth : MonoBehaviour
 	public Text depthText;
 	public Text maxDepthText;
 	public Text mapMaxDepthText;
+	public Text lockMessage;
 	public Text unLockMessage;
 	public SettingData set;
+
+	private int data = 0;
 
 	private void Start()
 	{
@@ -122,6 +125,19 @@ public class MapDepth : MonoBehaviour
 		mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
     }
 
+	public int UnlockInfomation()
+    {
+		for (int i = 0; i < MapTable.Count; i++)
+        {
+			if (MapTable[i].StageDepth < maxDepth)
+            {
+				data++;
+            }
+        }
+
+		return data;
+    }
+
 	public void Setting()
 	{
         if (mapLevel == 1)
@@ -132,7 +148,11 @@ public class MapDepth : MonoBehaviour
             Depth = MapInfomation.StageDepth;
 
             mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
-        }
+
+			AllFade();
+			StopCoroutine("UnLockFade");
+			StartCoroutine("UnLockFade");
+		}
         else if (maxDepth > MapPreviousInfomation.StageDepth)
 		{
 			MapPreviousInfomation = MapTable[mapLevel - 1];
@@ -143,11 +163,16 @@ public class MapDepth : MonoBehaviour
 			Depth = MapInfomation.StageDepth;
 
 			mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
+
+			AllFade();
+			StopCoroutine("UnLockFade");
+			StartCoroutine("UnLockFade");
 		}
 		else
         {
-			StopCoroutine("Fade");
-			StartCoroutine("Fade");
+			AllFade();
+			StopCoroutine("LockFade");
+			StartCoroutine("LockFade");
         }
 	}
 
@@ -171,7 +196,18 @@ public class MapDepth : MonoBehaviour
 		}
 	}
 
-	public IEnumerator Fade()
+	public IEnumerator LockFade()
+	{
+		lockMessage.color = new Color(lockMessage.color.r, lockMessage.color.g, lockMessage.color.b, 1);
+
+		while (lockMessage.color.a > 0.0f)
+		{
+			lockMessage.color = new Color(lockMessage.color.r, lockMessage.color.g, lockMessage.color.b, lockMessage.color.a - (Time.deltaTime / 2.0f));
+			yield return null;
+		}
+	}
+
+	public IEnumerator UnLockFade()
 	{
 		unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, 1);
 
@@ -180,6 +216,12 @@ public class MapDepth : MonoBehaviour
 			unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, unLockMessage.color.a - (Time.deltaTime / 2.0f));
 			yield return null;
 		}
+	}
+
+	public void AllFade()
+    {
+		lockMessage.color = new Color(lockMessage.color.r, lockMessage.color.g, lockMessage.color.b, 0);
+		unLockMessage.color = new Color(unLockMessage.color.r, unLockMessage.color.g, unLockMessage.color.b, 0);
 	}
 
 	public void Initialize()
