@@ -43,6 +43,7 @@ public class StartGame : MonoBehaviour
 		}
 		else if (depth._Depth <= status._myDepth)
 		{
+			
 			StartCoroutine("Clear");
 		}
 		else

@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
 	{
 		health = int.Parse(SecurePlayerPrefs.GetString("health", SecurePlayerPrefs.GetData("Deathwing"), 100));
 		stemina = int.Parse(SecurePlayerPrefs.GetString("stemina", SecurePlayerPrefs.GetData("Ysera"), 100));
+
 		Initialize();
 	}
 
