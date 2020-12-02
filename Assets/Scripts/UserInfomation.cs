@@ -13,6 +13,8 @@ public class UserInfomation : MonoBehaviour
     public Text userDepth; // 유저의 최대 달성 깊이
     public Text userAchieve; // 유저의 업적 개수
     public Text userUnlock; // 유저가 언락한 지역의 개수
+    public UserAchieve achieveData; // 업적 달성
+    public MapDepth unlockData; // 지역 해금
 
     void Start()
     {
@@ -28,8 +30,8 @@ public class UserInfomation : MonoBehaviour
         }
 
         userDepth.text = $"{PlayerPrefs.GetInt("maxDepth")} M";
-        userAchieve.text = $" 개";
-        userUnlock.text = $" 개";
+        userAchieve.text = $"{achieveData.getData()} 개";
+        userUnlock.text = $"{unlockData.UnlockInfomation()} 개";
     }
 
     // 유저 이미지 받아오기
