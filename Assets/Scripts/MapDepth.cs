@@ -108,7 +108,11 @@ public class MapDepth : MonoBehaviour
 
 	private void Start()
 	{
-		mapLevel = PlayerPrefs.GetInt("maplevel");
+		//mapLevel = PlayerPrefs.GetInt("maplevel");
+		//maxDepth = PlayerPrefs.GetInt("maxDepth");
+
+		mapLevel = int.Parse(SecurePlayerPrefs.GetString("mapLevel", SecurePlayerPrefs.GetData("Alexstrasza"), 1));
+		maxDepth = int.Parse(SecurePlayerPrefs.GetString("mapDepth", SecurePlayerPrefs.GetData("Neltharion"), 0));
 
 		Initialize();
 
@@ -118,9 +122,6 @@ public class MapDepth : MonoBehaviour
 		WaterPressure = MapInfomation.Preessure;
 		SwimmingSP = MapInfomation.Swimming;
 		Depth = MapInfomation.StageDepth;
-
-		mapLevel = PlayerPrefs.GetInt("maplevel");
-		maxDepth = PlayerPrefs.GetInt("maxDepth");
 
 		mapMaxDepthText.text = $"목표 수심: {MapInfomation.StageDepth}M";
     }
@@ -180,7 +181,8 @@ public class MapDepth : MonoBehaviour
 		if (!(mapLevel == 1) || !(mapLevel < 24)) {
 			mapLevel--;
 
-			PlayerPrefs.SetInt("maplevel", mapLevel);
+			//PlayerPrefs.SetInt("maplevel", mapLevel);
+			SecurePlayerPrefs.SetString("mapLevel", mapLevel.ToString(), SecurePlayerPrefs.GetData("Alexstrasza"));
 
 			MapInfomation = MapTable[mapLevel];
 		}
@@ -190,7 +192,8 @@ public class MapDepth : MonoBehaviour
 		if (!(mapLevel == 24) || !(mapLevel > 1)) {
 			mapLevel++;
 
-			PlayerPrefs.SetInt("maplevel", mapLevel);
+			//PlayerPrefs.SetInt("maplevel", mapLevel);
+			SecurePlayerPrefs.SetString("mapLevel", mapLevel.ToString(), SecurePlayerPrefs.GetData("Alexstrasza"));
 
 			MapInfomation = MapTable[mapLevel];
 		}

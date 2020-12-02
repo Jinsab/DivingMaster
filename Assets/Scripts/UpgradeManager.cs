@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
@@ -69,7 +70,8 @@ public class UpgradeManager : MonoBehaviour
 		diving._swimPower = Swim.Value;
 		diving._touchPower = Power.Value;
 
-		PlayerPrefs.SetInt("reward", Reward.Value);
+		//PlayerPrefs.SetInt("reward", Reward.Value);
+		SecurePlayerPrefs.SetString("reward", Reward.Value.ToString(), SecurePlayerPrefs.GetData("Onyxia"));
 	}
 
 	public void UpgradeHealth() {
@@ -82,10 +84,14 @@ public class UpgradeManager : MonoBehaviour
 			//Health.Value += (Health.Value / 10);
 			//Health.Cost += (Health.Cost / 2);
 
-			PlayerPrefs.SetInt("coin", status._coin);
-			PlayerPrefs.SetInt("health", Health.Value);
+			//PlayerPrefs.SetInt("coin", status._coin);
+			//PlayerPrefs.SetInt("health", Health.Value);
+			//PlayerPrefs.SetString("uphealth", Health.ToString());
+
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
+			SecurePlayerPrefs.SetString("health", Health.Value.ToString(), SecurePlayerPrefs.GetData("Deathwing"));
 			PlayerPrefs.SetString("uphealth", Health.ToString());
-			
+
 			SettingCoin(getCoin);
 			statText.SettingHealth(Health);
 			status._HP = Health.Value;
@@ -106,9 +112,14 @@ public class UpgradeManager : MonoBehaviour
 			//Stemina.Value += (Stemina.Value / 10);
 			//Stemina.Cost += (Stemina.Cost / 2);
 
-			PlayerPrefs.SetInt("coin", status._coin);
-			PlayerPrefs.SetInt("stemina", Stemina.Value);
-			PlayerPrefs.SetString("upstemina", Stemina.ToString());
+			//PlayerPrefs.SetInt("coin", status._coin);
+			//PlayerPrefs.SetInt("stemina", Stemina.Value);
+			//PlayerPrefs.SetString("upstemina", Stemina.ToString());
+
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
+			SecurePlayerPrefs.SetString("stemina", Stemina.Value.ToString(), SecurePlayerPrefs.GetData("Ysera"));
+			PlayerPrefs.SetString("uphealth", Stemina.ToString());
+
 			SettingCoin(getCoin);
 			statText.SettingStemina(Stemina);
 			status._SP = Stemina.Value;
@@ -131,7 +142,7 @@ public class UpgradeManager : MonoBehaviour
 			//Swim.Value++;
 			//Swim.Cost += (Swim.Cost / 2);
 
-			PlayerPrefs.SetInt("coin", status._coin);
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 			PlayerPrefs.SetString("upswim", Swim.ToString());
 			SettingCoin(getCoin);
 			statText.SettingSwim(Swim);
@@ -147,9 +158,9 @@ public class UpgradeManager : MonoBehaviour
 		{
 			status._coin -= Power.Cost;
 
-			Power = GameManager.PowerTable[Power.Level + 1]; 
+			Power = GameManager.PowerTable[Power.Level + 1];
 
-			PlayerPrefs.SetInt("coin", status._coin);
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 			PlayerPrefs.SetString("uppower", Power.ToString());
 			SettingCoin(getCoin);
 			statText.SettingPower(Power);
@@ -167,12 +178,12 @@ public class UpgradeManager : MonoBehaviour
 
 			Reward = GameManager.RewardTable[Reward.Level + 1];
 
-			PlayerPrefs.SetInt("coin", status._coin);
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 			PlayerPrefs.SetString("upreward", Reward.ToString());
 			SettingCoin(getCoin);
 			upgradeText.SettingReward(Reward);
-			PlayerPrefs.SetInt("reward", Reward.Value);
-			//
+			//PlayerPrefs.SetInt("reward", Reward.Value);
+			SecurePlayerPrefs.SetString("reward", Reward.Value.ToString(), SecurePlayerPrefs.GetData("Onyxia"));
 		}
 		else
 		{
@@ -187,7 +198,7 @@ public class UpgradeManager : MonoBehaviour
 
 			Luck = GameManager.LuckTable[Luck.Level + 1];
 
-			PlayerPrefs.SetInt("coin", status._coin);
+			SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 			PlayerPrefs.SetString("upluck", Luck.ToString());
 			SettingCoin(getCoin);
 			upgradeText.SettingLuck(Luck);

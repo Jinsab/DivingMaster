@@ -100,8 +100,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -120,8 +123,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -161,8 +167,11 @@ public class StartGame : MonoBehaviour
 
 					status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-					PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-					PlayerPrefs.SetInt("coin", status._coin);
+					//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+					//PlayerPrefs.SetInt("coin", status._coin);
+
+					SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+					SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 					Debug.Log("정산 완료");
 					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -209,8 +218,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -223,8 +235,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -253,8 +268,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -267,8 +285,11 @@ public class StartGame : MonoBehaviour
 
 						status._maxDepth = ReturnMaxDepth(status._myDepth);
 
-						PlayerPrefs.SetInt("maxDepth", status._maxDepth);
-						PlayerPrefs.SetInt("coin", status._coin);
+						//PlayerPrefs.SetInt("maxDepth", status._maxDepth);
+						//PlayerPrefs.SetInt("coin", status._coin);
+
+						SecurePlayerPrefs.SetString("mapDepth", status._maxDepth.ToString(), SecurePlayerPrefs.GetData("Neltharion"));
+						SecurePlayerPrefs.SetString("coin", status._coin.ToString(), SecurePlayerPrefs.GetData("Nefarian"));
 
 						Debug.Log("정산 완료");
 						SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -284,8 +305,9 @@ public class StartGame : MonoBehaviour
 	public int ReturnCoin(int retain, int correction, int reverse)
 	{
 		int bonus;
-		bonus = PlayerPrefs.GetInt("reward");
-
+		//bonus = PlayerPrefs.GetInt("reward");
+		bonus = int.Parse(SecurePlayerPrefs.GetString("reward", SecurePlayerPrefs.GetData("Onyxia"), 0));
+		
 		// correction 2라면 2배, reverse 5라면 0.2배
 		int coin = ((depth._WaterPressure * (depth.mapLevel + 4 + bonus)) + (status._myDepth/10)) / reverse * correction;
 
@@ -316,7 +338,8 @@ public class StartGame : MonoBehaviour
 		status.isEscape = true;
 		status._HP = 0;
 		status.dieCount += 1;
-		PlayerPrefs.SetInt("dieCount", status.dieCount);
+		//PlayerPrefs.SetInt("dieCount", status.dieCount);
+		SecurePlayerPrefs.SetString("dieCount", status.dieCount.ToString(), SecurePlayerPrefs.GetData("Malygos"));
 		StartCoroutine(DiePlayer());
     }
 
@@ -336,6 +359,7 @@ public class StartGame : MonoBehaviour
             }
         }
 
-		PlayerPrefs.SetInt("dieCount", status.dieCount);
+		//PlayerPrefs.SetInt("dieCount", status.dieCount);
+		SecurePlayerPrefs.SetString("dieCount", status.dieCount.ToString(), SecurePlayerPrefs.GetData("Malygos"));
 	}
 }

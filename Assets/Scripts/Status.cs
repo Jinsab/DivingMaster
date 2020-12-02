@@ -27,15 +27,35 @@ public class Status : MonoBehaviour
 
 	private void Start()
 	{
+		// health = Deathwing
+		// stemina = Ysera
+		// maplevel = Alexstrasza
+		// maxDepth = Neltharion
+		// coin = Nefarian
+		// reward = Onyxia
+		// dieCount = Malygos
+
+		/*
 		HP = PlayerPrefs.GetInt("health", 100);
 		SP = PlayerPrefs.GetInt("stemina", 100);
-		
+
 		hpSlider.maxValue = HP;
 		spSlider.maxValue = SP;
 
 		coin = PlayerPrefs.GetInt("coin");
 		maxDepth = PlayerPrefs.GetInt("maxDepth");
 		dieCount = PlayerPrefs.GetInt("dieCount");
+		*/
+
+		HP = int.Parse(SecurePlayerPrefs.GetString("health", SecurePlayerPrefs.GetData("Deathwing"), 100));
+		SP = int.Parse(SecurePlayerPrefs.GetString("stemina", SecurePlayerPrefs.GetData("Ysera"), 100));
+
+		hpSlider.maxValue = HP;
+		spSlider.maxValue = SP;
+
+		coin = int.Parse(SecurePlayerPrefs.GetString("coin", SecurePlayerPrefs.GetData("Nefarian"), 0));
+		maxDepth = int.Parse(SecurePlayerPrefs.GetString("mapDepth", SecurePlayerPrefs.GetData("Neltharion"), 0));
+		dieCount = int.Parse(SecurePlayerPrefs.GetString("dieCount", SecurePlayerPrefs.GetData("Malygos"), 0));
 	}
 
 	private void Update()

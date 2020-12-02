@@ -12,6 +12,6 @@ public class GetCoin : MonoBehaviour
 
 	public void SetCoinText() {
 		Text coinText = gameObject.GetComponent<Text>();
-		coinText.text = PlayerPrefs.GetInt("coin").ToString();
+		coinText.text = SecurePlayerPrefs.GetString("coin", SecurePlayerPrefs.GetData("Nefarian"), 0);
 	}
 }
