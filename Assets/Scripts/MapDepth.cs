@@ -154,7 +154,7 @@ public class MapDepth : MonoBehaviour
 			StopCoroutine("UnLockFade");
 			StartCoroutine("UnLockFade");
 		}
-        else if (maxDepth > MapPreviousInfomation.StageDepth)
+        else if (maxDepth >= MapPreviousInfomation.StageDepth)
 		{
 			MapPreviousInfomation = MapTable[mapLevel - 1];
 
